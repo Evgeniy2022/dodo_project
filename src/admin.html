@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+@@include('html/head.html',{
+"title":"Панель администратора"
+})
+<body>
+	<div class="wrapper">
+		@@include('html/order/orderheader.html',{})
+		<main class="main__admin">
+			Приготовть :
+			<script>
+				let DATA = JSON.parse(localStorage.getItem("basket")) 
+				let main = document.querySelector('.main__admin')
+				DATA.map(item =>{
+					main.innerHTML += `Приготовть : ` + item.name + "<br>"
+				})
+			</script>
+		</main>
+		@@include('html/basket/basketfooter.html',{})
+		<script src="js/app.min.js"></script>
+	</div>
+</body>
+</html>

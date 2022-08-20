@@ -1,0 +1,103 @@
+.basket {
+
+	&__footer {
+		background: #464C55;
+		padding: 59px 0 41px 0;
+	}
+
+
+	&__footer-contacts {
+		padding: 0 0 47px 0;
+		border-bottom: 1px solid #ffffff36;
+	}
+
+	&__footer-contact {
+		text-align: right;
+	}
+
+	&__footer-contact-tel {
+		font-weight: 600;
+		font-size: 26px;
+		line-height: 1;
+		color: $white;
+		margin-bottom: 6px;
+		transition: all 0.3s ease-in-out;
+		&:hover {
+			transition: all 0.3s ease-in-out;
+			color: rgba(255, 255, 255, 0.8);
+		}
+	}
+
+	&__footer-other {
+		display: flex;
+		align-items: center;
+		padding-top: 46px;
+		font-size: 16px;
+	}
+
+	&__footer-other-logo {
+		margin-right: 28px;
+	}
+
+	&__footer-other-date {
+		font-size: 16px;
+		line-height: 22px;
+		color: #ffffffb9;
+		margin-right: 64px;
+	}
+
+	&__footer-other-data {
+		display: flex;
+		align-items: center;
+	}
+
+	&__footer-other-information {
+		margin-right: 20px;
+		a{
+			color: rgba(255, 255, 255, 0.788);
+			transition: all 0.3s ease-in-out;
+			&:hover {
+				transition: all 0.3s ease-in-out;
+				color: rgba(255, 255, 255, 1);
+			}
+		}
+		
+	}
+
+	&__footer-other-compound {
+		margin-right: 20px;
+		a{
+			color: rgba(255, 255, 255, 0.788);
+			transition: all 0.3s ease-in-out;
+			&:hover {
+				transition: all 0.3s ease-in-out;
+				color: rgba(255, 255, 255, 1);
+			}
+		}
+	}
+
+	&__footer-other-helps {
+		a{
+			color: rgba(255, 255, 255, 0.788);
+			transition: all 0.3s ease-in-out;
+			&:hover {
+				transition: all 0.3s ease-in-out;
+				color: rgba(255, 255, 255, 1);
+			}
+		}
+	}
+
+	&__footer-other-mail {
+		margin: 0 0 0 auto;
+	}
+
+	&__footer-other-email {
+		font-size: 15px;
+		color: rgba(255, 255, 255, 0.88);
+		transition: all 0.3s ease-in-out;
+		&:hover{
+			transition: all 0.3s ease-in-out;
+			color: rgba(255, 255, 255, 1);
+		}
+	}
+}

@@ -1,0 +1,163 @@
+<main class="main__basket">
+	<div class="main__basket-container">
+		<h2 class="main__basket-order-title">Корзина</h2>
+		<div class="main__basket-order">
+		</div>
+		<div class="main__basket-cost">
+			<div class="main__basket-result">Сумма заказа:<span class="main__basket-sum">0</span></div>
+			<div class="main__basket-buttons">
+				<a href="index.html"><button class="main__basket-return">Вернуться в меню</button></a>
+				<a href="order.html"><button class="main__basket-next">Оформить заказ</button></a>
+			</div>
+		</div>
+	</div>
+</main>
+<script>
+	let basketElement = document.querySelector('.main__basket-order')
+	let basketGet = JSON.parse(localStorage.getItem("basket")) 
+
+	let tmpArray = [];
+
+		function itemCheck(arr) {
+			if (tmpArray.indexOf(arr.name) === -1) {
+				tmpArray.push(arr.name);
+				return true
+			}
+		return false
+		}
+		itemCheck(basketGet)
+		basketGet = basketGet.filter(arr => itemCheck(arr))
+		
+
+	function showBasket(e){
+		basketElement.innerHTML = ""
+		basketGet.forEach((element, index) => {
+
+			let basetProduct = document.createElement('div')
+			basetProduct.classList.add("main__basket-card")
+			basetProduct.innerHTML = ``
+
+			let basetProductBody = document.createElement('div')
+			basetProductBody.classList.add("main__basket-card-body")
+			basetProductBody.innerHTML = `
+			<img class="main__basket-card-bodyimg" src="${element.img}">
+			`
+
+			let basetDescription = document.createElement('div')
+			basetDescription.classList.add("main__basket-card-description")
+			basetDescription.innerHTML = `
+			<h1 class="main__basket-card-title">${element.name}</h1>
+			<p class="main__basket-card-text">${element.text}</p>
+			`
+
+			let basetCount = document.createElement('div')
+			basetCount.classList.add("main__basket-card-count")
+			basetCount.innerHTML = ``
+
+			let basketCountMinus = document.createElement('div')
+			basketCountMinus.classList.add("main__basket-card-minus")
+			basketCountMinus.setAttribute("data-actions", "minus")
+			basketCountMinus.setAttribute("data-index", index)
+			basketCountMinus.innerHTML = `-`
+
+			let basketCountCounter = document.createElement('div')
+			basketCountCounter.classList.add("main__basket-card-setcount")
+			basketCountCounter.setAttribute("data-counter", index)
+			basketCountCounter.innerHTML = `${element.count}`
+
+			let basketCountPlus = document.createElement('div')
+			basketCountPlus.classList.add("main__basket-card-plus")
+			basketCountPlus.setAttribute("data-actions", "plus")
+			basketCountPlus.setAttribute("data-index", index)
+			basketCountPlus.innerHTML = `+`
+
+			let basetSum = document.createElement('div')
+			basetSum.classList.add("main__basket-card-sum")
+			basetSum.innerHTML = `${element.cash}`
+
+			let basetDelete = document.createElement('img')
+			basetDelete.classList.add("main__basket-card-del")
+			basetDelete.setAttribute("src", "../../img/basket/Vector.svg")
+			basetDelete.setAttribute("data-index", index)
+			basetDelete.innerHTML = ``
+			basetDelete.addEventListener("click", (e) => { deletePosition(e) })
+			
+			basetProductBody.append(basetDescription)
+			basetCount.append(basketCountMinus)
+			basetCount.append(basketCountCounter)
+			basetCount.append(basketCountPlus)
+
+			basetProductBody.append(basetCount)
+			basetProductBody.append(basetSum)
+			basetProductBody.append(basetDelete)
+			basetProduct.append(basetProductBody)
+
+			basketElement.append(basetProduct)
+		});
+		calcCartTotal()
+	}
+
+	showBasket()
+
+	function deletePosition(e){
+		let indexEl = +e.target.getAttribute("data-index")
+		basketGet.splice(indexEl, 1)
+		localStorage.setItem("basket", JSON.stringify(basketGet))
+		calcCartTotal()
+		showBasket()
+
+	}
+
+	window.addEventListener("click", (event) => {
+		let counter;
+		if(event.target.dataset.actions === "minus" || event.target.dataset.actions == "plus"){
+			let counterBlock = event.target.closest(".main__basket-card-count")
+			counter = counterBlock.querySelector("[data-counter]");
+			
+		}
+		if(event.target.dataset.actions === "minus"){
+			if(parseInt(counter.innerText) > 1){
+				counter.innerText = --counter.innerText
+				countProdact(event)
+			}
+			
+		}
+		if (event.target.dataset.actions === "plus") {
+			counter.innerText = ++counter.innerText
+			countProdact(event)
+		}
+		if(event.target.hasAttribute('data-actions') && event.target.closest('.main__basket-order')){
+			calcCartTotal()
+		}
+	})
+
+	function calcCartTotal(){
+		let outCartCost = document.querySelector('.main__basket-sum')
+		let totalPrice = 0;
+		let basket = JSON.parse(localStorage.getItem("basket"));
+
+		basket.forEach(item =>{
+			let res = +item.count * parseInt(item.cash)
+			totalPrice += res
+			outCartCost.innerHTML = totalPrice + ' ₽'
+		})
+		outCartCost.style.marginLeft = "5px"
+		
+	}
+
+	function countProdact(e){
+		let countCart = JSON.parse(localStorage.getItem("basket"));
+		let getIndex = +e.target.getAttribute('data-index');
+		
+		if (e.target.dataset.actions === "minus") {
+			countCart[getIndex].count = countCart[getIndex].count - 1
+			localStorage.setItem("basket", JSON.stringify(countCart))
+		}
+		
+		if (e.target.dataset.actions === "plus") {
+			countCart[getIndex].count = countCart[getIndex].count + 1
+			localStorage.setItem("basket", JSON.stringify(countCart))
+		}
+	}
+
+</script>

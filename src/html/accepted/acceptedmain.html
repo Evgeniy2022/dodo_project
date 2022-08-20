@@ -1,0 +1,28 @@
+<main class="main__accepted">
+	<div class="main__accepted-container">
+		<div class="main__accepted-block">
+			<div class="main__accepted-status">
+				<p>Заказ №</p>
+				<div class="main__accepted-status-oder">
+					<h1>Приняли</h1>
+					<p>24 мин</p>
+				</div>
+			</div>
+			<div class="main__accepted-delivery">
+				<p  class="main__accepted-delivery-adress">Доставим по адресу: Москва, ул. 1-я Машиностроения, д. 10</p>
+			</div>
+			<div class="main__accepted-buttons">
+				<a href="order.html"><button class="main__accepted-return">Отменить заказ</button></a>
+				<a href="index.html"><button class="main__accepted-next">Вернуться в меню</button></a>
+			</div>
+		</div>
+	</div>
+	<script>
+		let DATA = JSON.parse(localStorage.getItem("DATA")) || []
+		let delivery = document.querySelector('.main__accepted-delivery-adress')
+		if(DATA !== []){
+			delivery.innerHTML= `Доставим по адресу: ` + DATA[0].adress
+		}
+		
+	</script>
+</main>

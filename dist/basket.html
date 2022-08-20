@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+	<link rel="stylesheet" href="css/style.min.css">
+	<title>Корзина</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<div class="wrapper">
+		<header class="header__basket">
+	<div class="header__basket-container">
+		<div class="header__basket-content">
+			<a class="header__basket-img" href="index.html"><img class="header__basket-logo" src="img/header/Логотип (1).svg" alt="logo"></a>
+			<div class="header__basket-block">
+				<div class="header__basket-point">
+					<div class="header__basket-position black">
+						<p class="black-text">1</p>
+					</div>
+					<p class="black-text">Корзина</p>
+				</div>
+				<img src="img/basket/header/Line.svg" alt="линия">
+				<div class="header__basket-point">
+					<div class="header__basket-position">
+						<p>2</p>
+					</div>
+					<p>Оформление заказа</p>
+				</div>
+				<img src="img/basket/header/Line 6.svg" alt="линия">
+				<div class="header__basket-point">
+					<div class="header__basket-position">
+						<p>3</p>
+					</div>
+					<p>Заказ принят</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+		<main class="main__basket">
+	<div class="main__basket-container">
+		<h2 class="main__basket-order-title">Корзина</h2>
+		<div class="main__basket-order">
+		</div>
+		<div class="main__basket-cost">
+			<div class="main__basket-result">Сумма заказа:<span class="main__basket-sum">0</span></div>
+			<div class="main__basket-buttons">
+				<a href="index.html"><button class="main__basket-return">Вернуться в меню</button></a>
+				<a href="order.html"><button class="main__basket-next">Оформить заказ</button></a>
+			</div>
+		</div>
+	</div>
+</main>
+<script>
+	let basketElement = document.querySelector('.main__basket-order')
+	let basketGet = JSON.parse(localStorage.getItem("basket")) 
+
+	let tmpArray = [];
+
+		function itemCheck(arr) {
+			if (tmpArray.indexOf(arr.name) === -1) {
+				tmpArray.push(arr.name);
+				return true
+			}
+		return false
+		}
+		itemCheck(basketGet)
+		basketGet = basketGet.filter(arr => itemCheck(arr))
+		
+
+	function showBasket(e){
+		basketElement.innerHTML = ""
+		basketGet.forEach((element, index) => {
+
+			let basetProduct = document.createElement('div')
+			basetProduct.classList.add("main__basket-card")
+			basetProduct.innerHTML = ``
+
+			let basetProductBody = document.createElement('div')
+			basetProductBody.classList.add("main__basket-card-body")
+			basetProductBody.innerHTML = `
+			<img class="main__basket-card-bodyimg" src="${element.img}">
+			`
+
+			let basetDescription = document.createElement('div')
+			basetDescription.classList.add("main__basket-card-description")
+			basetDescription.innerHTML = `
+			<h1 class="main__basket-card-title">${element.name}</h1>
+			<p class="main__basket-card-text">${element.text}</p>
+			`
+
+			let basetCount = document.createElement('div')
+			basetCount.classList.add("main__basket-card-count")
+			basetCount.innerHTML = ``
+
+			let basketCountMinus = document.createElement('div')
+			basketCountMinus.classList.add("main__basket-card-minus")
+			basketCountMinus.setAttribute("data-actions", "minus")
+			basketCountMinus.setAttribute("data-index", index)
+			basketCountMinus.innerHTML = `-`
+
+			let basketCountCounter = document.createElement('div')
+			basketCountCounter.classList.add("main__basket-card-setcount")
+			basketCountCounter.setAttribute("data-counter", index)
+			basketCountCounter.innerHTML = `${element.count}`
+
+			let basketCountPlus = document.createElement('div')
+			basketCountPlus.classList.add("main__basket-card-plus")
+			basketCountPlus.setAttribute("data-actions", "plus")
+			basketCountPlus.setAttribute("data-index", index)
+			basketCountPlus.innerHTML = `+`
+
+			let basetSum = document.createElement('div')
+			basetSum.classList.add("main__basket-card-sum")
+			basetSum.innerHTML = `${element.cash}`
+
+			let basetDelete = document.createElement('img')
+			basetDelete.classList.add("main__basket-card-del")
+			basetDelete.setAttribute("src", "../../img/basket/Vector.svg")
+			basetDelete.setAttribute("data-index", index)
+			basetDelete.innerHTML = ``
+			basetDelete.addEventListener("click", (e) => { deletePosition(e) })
+			
+			basetProductBody.append(basetDescription)
+			basetCount.append(basketCountMinus)
+			basetCount.append(basketCountCounter)
+			basetCount.append(basketCountPlus)
+
+			basetProductBody.append(basetCount)
+			basetProductBody.append(basetSum)
+			basetProductBody.append(basetDelete)
+			basetProduct.append(basetProductBody)
+
+			basketElement.append(basetProduct)
+		});
+		calcCartTotal()
+	}
+
+	showBasket()
+
+	function deletePosition(e){
+		let indexEl = +e.target.getAttribute("data-index")
+		basketGet.splice(indexEl, 1)
+		localStorage.setItem("basket", JSON.stringify(basketGet))
+		calcCartTotal()
+		showBasket()
+
+	}
+
+	window.addEventListener("click", (event) => {
+		let counter;
+		if(event.target.dataset.actions === "minus" || event.target.dataset.actions == "plus"){
+			let counterBlock = event.target.closest(".main__basket-card-count")
+			counter = counterBlock.querySelector("[data-counter]");
+			
+		}
+		if(event.target.dataset.actions === "minus"){
+			if(parseInt(counter.innerText) > 1){
+				counter.innerText = --counter.innerText
+				countProdact(event)
+			}
+			
+		}
+		if (event.target.dataset.actions === "plus") {
+			counter.innerText = ++counter.innerText
+			countProdact(event)
+		}
+		if(event.target.hasAttribute('data-actions') && event.target.closest('.main__basket-order')){
+			calcCartTotal()
+		}
+	})
+
+	function calcCartTotal(){
+		let outCartCost = document.querySelector('.main__basket-sum')
+		let totalPrice = 0;
+		let basket = JSON.parse(localStorage.getItem("basket"));
+
+		basket.forEach(item =>{
+			let res = +item.count * parseInt(item.cash)
+			totalPrice += res
+			outCartCost.innerHTML = totalPrice + ' ₽'
+		})
+		outCartCost.style.marginLeft = "5px"
+		
+	}
+
+	function countProdact(e){
+		let countCart = JSON.parse(localStorage.getItem("basket"));
+		let getIndex = +e.target.getAttribute('data-index');
+		
+		if (e.target.dataset.actions === "minus") {
+			countCart[getIndex].count = countCart[getIndex].count - 1
+			localStorage.setItem("basket", JSON.stringify(countCart))
+		}
+		
+		if (e.target.dataset.actions === "plus") {
+			countCart[getIndex].count = countCart[getIndex].count + 1
+			localStorage.setItem("basket", JSON.stringify(countCart))
+		}
+	}
+
+</script>
+		<footer class="basket__footer">
+	<div class="basket__footer-container">
+		<section class="basket__footer-contacts">
+			<div class="basket__footer-contact">
+				<a class="basket__footer-contact-tel" href="tel:88003020060">8-800-302-00-60</a>
+				<p>Звонок бесплатный</p>
+			</div>
+		</section>
+		<section class="basket__footer-other">
+			<div class="basket__footer-other-logo">
+				<img src="img/footer/Group.svg" alt="Логотип">
+			</div>
+			<div class="basket__footer-other-date">© 2021</div>
+			<div class="basket__footer-other-data">
+				<div class="basket__footer-other-information"><a href="#">Правовая информация</a></div>
+				<div class="basket__footer-other-compound"><a href="#">Калорийность и состав</a></div>
+				<div class="basket__footer-other-helps"><a href="#">Помощь</a></div>
+			</div>
+			<div class="basket__footer-other-mail">
+					<a class="basket__footer-other-email" href="mailto:feedback@dodopizza.com">feedback@dodopizza.com</a>
+				</div>
+		</section>
+	</div>
+</footer>
+			<script src="js/app.min.js"></script>
+	</div>
+</body>
+</html>

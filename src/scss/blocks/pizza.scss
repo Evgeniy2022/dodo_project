@@ -1,0 +1,95 @@
+.main {
+
+
+	&__pizza-title {
+		font-weight: 700;
+		font-size: 24px;
+		line-height: 1.375;
+		color: #000;
+		margin-bottom: 40px;
+	}
+
+	&__pizza-list {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&__pizza-menu {
+		flex: 0 1 250px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		margin: 0 0 60px 0px;
+		&:not(:nth-child(4)){
+			margin-right: 20px;
+		}
+		
+		&:last-child{
+			margin-right: 0;
+		}
+	}
+
+	&__pizza-menu-img {
+		width: 220px;
+		height: 190px;
+		margin-bottom: 5px;
+		padding: 0 15px;
+		transition: all 0.3s linear;
+		&:hover{
+			transform: translateY(-10px);
+			transition: all 0.3s linear;
+		}
+	}
+
+	&__pizza-menu-title {
+		font-weight: 600;
+		font-size: 20px;
+		line-height: 1.35;
+		color: #000;
+		margin-bottom: 10px;
+	}
+
+	&__pizza-menu-text {
+		max-width: 224px;
+		margin-bottom: 30px;
+	}
+
+	&__pizza-menu-order {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__pizza-menu-cost {
+		font-weight: 600;
+		font-size: 16px;
+		line-height: 1.375;
+		color: #000;
+	}
+
+	&__pizza-menu-choose {
+		margin-right: 20px;
+		font-weight: 600;
+		font-size: 16px;
+		line-height: 1.375;
+		color: #D15700;
+		background: #FFF0E6;
+		padding: 9px 29px;
+		border-radius: 30px;
+		transition: all 0.3s ease-in;
+		&:hover{
+			background: #f09b62;
+			color: $white;
+			transition: all 0.3s ease-in;
+		}
+	}
+}
+.choose-menu-pizza-orange{
+	color: $white;
+	background: #F96900;
+	transition: all 0.3s ease-in;
+	&:hover {
+			background: #f93200;
+			transition: all 0.3s ease-in;
+		}
+}

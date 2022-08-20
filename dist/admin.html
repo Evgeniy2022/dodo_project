@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+	<link rel="stylesheet" href="css/style.min.css">
+	<title>Панель администратора</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<div class="wrapper">
+		<header class="header__order">
+	<div class="header__order-container">
+		<div class="header__order-content">
+			<a class="header__order-img" href="index.html"><img class="header__order-logo"
+					src="img/header/Логотип (1).svg" alt="logo"></a>
+			<div class="header__order-block">
+				<div class="header__order-point">
+					<div class="header__order-position black">
+						<img class="header__order-position-img" src="img/order/header/Vector 2.svg" alt="">
+					</div>
+					<p class="black-text">Корзина</p>
+				</div>
+				<img src="img/order/header/Line 6.jpg" alt="линия">
+				<div class="header__order-point">
+					<div class="header__order-position black">
+						<p class="black-text">2</p>
+					</div>
+					<p class="black-text">Оформление заказа</p>
+				</div>
+				<img src="img/basket/header/Line 6.svg" alt="линия">
+				<div class="header__order-point">
+					<div class="header__order-position">
+						<p>3</p>
+					</div>
+					<p>Заказ принят</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+		<main class="main__admin">
+			Приготовть :
+			<script>
+				let DATA = JSON.parse(localStorage.getItem("basket")) 
+				let main = document.querySelector('.main__admin')
+				DATA.map(item =>{
+					main.innerHTML += `Приготовть : ` + item.name + "<br>"
+				})
+			</script>
+		</main>
+		<footer class="basket__footer">
+	<div class="basket__footer-container">
+		<section class="basket__footer-contacts">
+			<div class="basket__footer-contact">
+				<a class="basket__footer-contact-tel" href="tel:88003020060">8-800-302-00-60</a>
+				<p>Звонок бесплатный</p>
+			</div>
+		</section>
+		<section class="basket__footer-other">
+			<div class="basket__footer-other-logo">
+				<img src="img/footer/Group.svg" alt="Логотип">
+			</div>
+			<div class="basket__footer-other-date">© 2021</div>
+			<div class="basket__footer-other-data">
+				<div class="basket__footer-other-information"><a href="#">Правовая информация</a></div>
+				<div class="basket__footer-other-compound"><a href="#">Калорийность и состав</a></div>
+				<div class="basket__footer-other-helps"><a href="#">Помощь</a></div>
+			</div>
+			<div class="basket__footer-other-mail">
+					<a class="basket__footer-other-email" href="mailto:feedback@dodopizza.com">feedback@dodopizza.com</a>
+				</div>
+		</section>
+	</div>
+</footer>
+		<script src="js/app.min.js"></script>
+	</div>
+</body>
+</html>

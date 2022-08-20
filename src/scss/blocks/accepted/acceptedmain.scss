@@ -1,0 +1,76 @@
+.main {
+
+	&__accepted-block {
+		max-width: 700px;
+		margin: 70px auto 70px;
+	}
+
+	&__accepted-status {
+		border-bottom: 4px solid #E2E2E9;
+		p{
+			font-size: 16px;
+			line-height: 1.375;
+			margin-bottom: 5px;
+		}
+	}
+
+	&__accepted-status-oder {
+		margin-bottom: 31px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		h1{
+			font-weight: 600;
+			font-size: 36px;
+			line-height: 1.361;
+			color: $black;
+		}
+		p{
+			font-weight: 600;
+			font-size: 36px;
+			line-height: 1.361;
+			color: $black;
+		}
+	}
+
+	&__accepted-delivery {
+		font-size: 16px;
+		color: $black;
+		margin: 9px 0 70px 0;
+	}
+
+	&__accepted-buttons {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__accepted-return {
+		cursor: pointer;
+		padding: 13px 21px;
+		background: #FFF0E6;
+		border-radius: 30px;
+		color: #D15700;
+		font-size: 16px;
+		transition: all 0.3s ease-in;
+		&:hover{
+			background: #f09b62;
+			color: $white;
+			transition: all 0.3s ease-in;
+		}
+	}
+
+	&__accepted-next {
+		cursor: pointer;
+		padding: 13px 27px;
+		background: #F96900;
+		border-radius: 30px;
+		color: $white;
+		font-size: 16px;
+		transition: all 0.3s ease-in;
+		&:hover{
+			background: #f93200;
+			transition: all 0.3s ease-in;
+		}
+	}
+}

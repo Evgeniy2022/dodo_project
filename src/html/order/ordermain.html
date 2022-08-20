@@ -1,0 +1,125 @@
+<main class="main__order">
+	<div class="main__order-container">
+		<h1>Заказ на доставку</h1>
+		<div class="main__order-block">
+			<div class="main__order-form">
+				<form action="" class="js-form">
+					<div class="main__order-form-name">
+						<label for="name">Имя</label>
+						<input type="text" name="name" id="name" class="js-input">
+					</div>
+					<div class="main__order-form-phone">
+						<label for="phone">Номер телефона</label>
+						<input type="phone" name="" id="phone" class="js-input js-input-phone">
+					</div>
+					<div class="main__order-form-adress">
+						<label for="adress">Куда доставить</label>
+						<textarea name="text" id="adress" placeholder="Город, улица, дом, квартира"></textarea>
+					</div>
+				</form>
+				<div class="main__order-buttons">
+					<a href="basket.html"><button class="main__order-return">Назад в корзину</button></a>
+					<a data-order href="accepted.html"><button class="main__order-next">Оформить заказ на<span class="main__order-next-price">0</span></button></a>
+				</div>
+			</div>
+
+			<div class="main__order-list" data-simplebar>
+				<div class="main__order-list-blocks">
+					<h2>Состав заказа</h2>
+				</div>
+				<div class="main__order-list-price">
+					<div class="main__order-list-price-title">Стоимость заказа</div>
+					<div class="main__order-list-price-total">0 ₽</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+	<script>
+		let basketGet = JSON.parse(localStorage.getItem("basket")) 
+
+		function showOrder(e){
+			let orderPizza = document.querySelector('.main__order-list-blocks')
+			basketGet.forEach(item => {
+				let orderProduct = document.createElement('div')
+				orderProduct.classList.add("main__order-list-block")
+				orderProduct.innerHTML = ``
+
+				let orderProductCosts = document.createElement('div')
+				orderProductCosts.classList.add("main__order-list-costs")
+				orderProductCosts.innerHTML = 
+				`
+				<div class="main__order-list-title">${item.name}</div>
+				<div class="main__order-list-cost">${item.cash}</div>
+				`
+
+				let orderProductTitle = document.createElement('div')
+				orderProductTitle.classList.add("main__order-list-amount")
+				orderProductTitle.innerHTML = `${item.count} шт`
+
+				orderPizza.append(orderProduct)
+
+				orderProduct.append(orderProductCosts)
+				orderProduct.append(orderProductTitle)
+			})
+			calcOrderTotal()
+		}
+		function calcOrderTotal() {
+				let outCartCost = document.querySelector('.main__order-list-price-total')
+				let outButtonCost = document.querySelector('.main__order-next-price')
+				let totalPrice = 0;
+				let basket = JSON.parse(localStorage.getItem("basket"));
+
+				basket.forEach(item => {
+					let res = +item.count * parseInt(item.cash)
+					totalPrice += res
+					outCartCost.innerHTML = totalPrice + ' ₽'
+					outButtonCost.innerHTML = totalPrice
+				})
+				outCartCost.style.marginLeft = "5px"
+				outButtonCost.style.marginLeft = "5px"
+			}
+		showOrder()
+
+
+		// Валидация формы 
+		// const form = document.querySelector('.js-form'),
+		// 		inputs = document.querySelectorAll('.js-input'),
+		// 		inputPhone = document.querySelector('.js-input-phone');
+
+		// form.onsubmit = function(){
+		// 	console.log("w")
+
+
+		// 	return false
+		// }как сделать валидацию если кнопка переводит на следующую страницу
+
+		const inputName = document.querySelector('.js-input')
+		const inputNumber = document.querySelector('.js-input-phone')
+		const inputAdress = document.querySelector('#adress')
+		const btnAddData = document.querySelector('[data-order]')
+
+		let DATA = []
+
+			console.log(DATA)
+		btnAddData.addEventListener("click", () => {
+			// let setDATA = JSON.parse(localStorage.getItem("DATA")) || [];
+			console.log(inputName.value)
+			let newDATA = {
+				name: inputName.value,
+				phone: inputNumber.value,
+				adress: inputAdress.value,
+			};
+			DATA.push(newDATA)
+			localStorage.setItem("DATA", JSON.stringify(DATA))
+		})
+		
+
+		
+
+
+
+
+	</script>
+</main>
